@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Form</title>
+</head>
+<body>
+    <h2>Voice-Controlled Form</h2>
+    <form id="dynamicForm"></form>
+    <button onclick="startListening()">Start Voice Input</button>
+    
+    <script>
+        let formType = localStorage.getItem("formType");
+        let formFields = {
+            "personal-info": ["Name", "Age", "Email"],
+            "job-application": ["Full Name", "Position", "Experience"]
+        };
+
+        function createForm() {
+            let form = document.getElementById("dynamicForm");
+            formFields[formType].forEach(field => {
+                let label = document.createElement("label");
+                label.innerText = field;
+                let input = document.createElement("input");
+                input.type = "text";
+                input.id = field.toLowerCase().replace(" ", "_");
+                form.appendChild(label);
+                form.appendChild(input);
+                form.appendChild(document.createElement("br"));
+            });
+        }
+        createForm();
+
+        function startListening() {
+            let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.onresult = function(event) {
+                let transcript = event.results[0][0].transcript;
+                let words = transcript.split(" ");
+                for (let key of Object.keys(formFields[formType])) {
+                    let field = formFields[formType][key].toLowerCase().replace(" ", "_");
+                    document.getElementById(field).value = words[key] || "";
+                }
+            };
+            recognition.start();
+        }
+    </script>
+</body>
+</html>
