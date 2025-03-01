@@ -1,30 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="styles.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice Sign-In</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div class="container">
-        <h2>Sign In</h2>
-        
-        <div class="input-group">
-            <input type="text" id="email" placeholder="Email">
-            <button type="button" onclick="startListening('email')">🎤</button>
-        </div>
-
-        <div class="input-group">
-            <input type="password" id="password" placeholder="Password">
-            <button type="button" onclick="startListening('password')">🎤</button>
-        </div>
-
-        <button id="signInButton">Sign In</button>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+<script>
+    function startSignInListening() {
+        let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.onresult = function(event) {
+            let username = event.results[0][0].transcript;
+            localStorage.setItem("username", username);
+            window.location.href = "voice-form.html"; // Redirect directly to form filling
+        };
+        recognition.start();
+    }
+    window.onload = startSignInListening;
+</script>
