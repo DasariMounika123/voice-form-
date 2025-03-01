@@ -8,23 +8,23 @@
 <body>
     <h2>Voice-Controlled Form</h2>
     <form id="dynamicForm"></form>
-    <button onclick="startListening()">Start Voice Input</button>
-    
+    <button onclick="startListening()">Restart Voice Input</button>
+
     <script>
-        let formType = localStorage.getItem("formType");
         let formFields = {
             "personal-info": ["Name", "Age", "Email"],
             "job-application": ["Full Name", "Position", "Experience"]
         };
 
         function createForm() {
+            let formType = "personal-info"; // Default form type
             let form = document.getElementById("dynamicForm");
             formFields[formType].forEach(field => {
                 let label = document.createElement("label");
                 label.innerText = field;
                 let input = document.createElement("input");
                 input.type = "text";
-                input.id = field.toLowerCase().replace(" ", "_");
+                input.id = field.toLowerCase().replace(/\s+/g, "_");
                 form.appendChild(label);
                 form.appendChild(input);
                 form.appendChild(document.createElement("br"));
@@ -34,16 +34,23 @@
 
         function startListening() {
             let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = true;
             recognition.onresult = function(event) {
-                let transcript = event.results[0][0].transcript;
+                let transcript = event.results[event.results.length - 1][0].transcript;
                 let words = transcript.split(" ");
-                for (let key of Object.keys(formFields[formType])) {
-                    let field = formFields[formType][key].toLowerCase().replace(" ", "_");
-                    document.getElementById(field).value = words[key] || "";
-                }
+                let formType = "personal-info"; // Default form type
+                formFields[formType].forEach((field, index) => {
+                    let fieldId = field.toLowerCase().replace(/\s+/g, "_");
+                    if (document.getElementById(fieldId)) {
+                        document.getElementById(fieldId).value = words[index] || "";
+                    }
+                });
             };
+            recognition.onend = () => recognition.start();
             recognition.start();
         }
+
+        window.onload = startListening;
     </script>
 </body>
 </html>
