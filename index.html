@@ -1,12 +1,20 @@
-<script>
-    function startSignInListening() {
-        let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.onresult = function(event) {
-            let username = event.results[0][0].transcript;
-            localStorage.setItem("username", username);
-            window.location.href = "voice-form.html"; // Redirect directly to form filling
-        };
-        recognition.start();
-    }
-    window.onload = startSignInListening;
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Sign-In</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Sign In with Voice</h2>
+        <input type="text" id="username" placeholder="Say your username" readonly>
+        <button id="mic-btn">🎤 Start</button>
+        <button id="sign-in-btn">Sign In</button>
+    </div>
+
+    <script src="voice.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>
