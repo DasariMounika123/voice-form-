@@ -3,13 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In</title>
-    <script src="auth.js"></script>
+    <title>Voice Sign-In</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Sign In</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="signIn()">Sign In</button>
+
+    <div class="container">
+        <h2>Sign In</h2>
+        
+        <div class="input-group">
+            <input type="text" id="email" placeholder="Email">
+            <button type="button" onclick="startListening('email')">🎤</button>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password">
+            <button type="button" onclick="startListening('password')">🎤</button>
+        </div>
+
+        <button id="signInButton">Sign In</button>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
