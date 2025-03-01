@@ -1,0 +1,73 @@
+/* Dark Background */
+body {
+    background-color: #121212;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Centered Form */
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    width: 320px;
+    text-align: center;
+}
+
+/* Input Fields */
+.input-group {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    margin-right: 10px;
+}
+
+input::placeholder {
+    color: lightgray;
+}
+
+/* Mic Button */
+button[type="button"] {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ff9800;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+button[type="button"]:hover {
+    background: #e68900;
+}
+
+/* Sign-In Button */
+#signInButton {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #007BFF;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+#signInButton:hover {
+    background: #0056b3;
+}
