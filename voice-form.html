@@ -4,53 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voice Form</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>Voice-Controlled Form</h2>
-    <form id="dynamicForm"></form>
-    <button onclick="startListening()">Restart Voice Input</button>
+    <div class="container">
+        <h2 id="form-title"></h2>
+        <form id="voice-form">
+            <label>Name:</label>
+            <input type="text" id="name" readonly>
+            <button type="button" id="mic-btn">🎤 Speak</button>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 
     <script>
-        let formFields = {
-            "personal-info": ["Name", "Age", "Email"],
-            "job-application": ["Full Name", "Position", "Experience"]
-        };
+        document.addEventListener("DOMContentLoaded", function() {
+            const params = new URLSearchParams(window.location.search);
+            document.getElementById("form-title").textContent = params.get("form") + " Form";
+        });
 
-        function createForm() {
-            let formType = "personal-info"; // Default form type
-            let form = document.getElementById("dynamicForm");
-            formFields[formType].forEach(field => {
-                let label = document.createElement("label");
-                label.innerText = field;
-                let input = document.createElement("input");
-                input.type = "text";
-                input.id = field.toLowerCase().replace(/\s+/g, "_");
-                form.appendChild(label);
-                form.appendChild(input);
-                form.appendChild(document.createElement("br"));
-            });
-        }
-        createForm();
-
-        function startListening() {
-            let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.continuous = true;
-            recognition.onresult = function(event) {
-                let transcript = event.results[event.results.length - 1][0].transcript;
-                let words = transcript.split(" ");
-                let formType = "personal-info"; // Default form type
-                formFields[formType].forEach((field, index) => {
-                    let fieldId = field.toLowerCase().replace(/\s+/g, "_");
-                    if (document.getElementById(fieldId)) {
-                        document.getElementById(fieldId).value = words[index] || "";
-                    }
-                });
-            };
-            recognition.onend = () => recognition.start();
+        document.getElementById("mic-btn").addEventListener("click", function() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = "en-US";
             recognition.start();
-        }
 
-        window.onload = startListening;
+            recognition.onresult = function(event) {
+                document.getElementById("name").value = event.results[0][0].transcript;
+            };
+        });
     </script>
 </body>
 </html>
