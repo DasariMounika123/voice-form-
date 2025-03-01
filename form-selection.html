@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Selection</title>
+    <title>Select a Form</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>Select a Form</h2>
-    <button onclick="goToForm('personal-info')">Personal Info</button>
-    <button onclick="goToForm('job-application')">Job Application</button>
-
-    <script>
-        function goToForm(type) {
-            localStorage.setItem("formType", type);
-            window.location.href = "voice-form.html";
-        }
-    </script>
+    <div class="container">
+        <h2>Choose a Form</h2>
+        <ul>
+            <li><a href="voice-form.html?form=feedback">Feedback Form</a></li>
+            <li><a href="voice-form.html?form=registration">Registration Form</a></li>
+        </ul>
+    </div>
 </body>
 </html>
