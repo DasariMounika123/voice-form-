@@ -1,10 +1,11 @@
 // Speech Recognition Setup
-document.getElementById("sign-in-btn").addEventListener("click", function() {
-    const username = document.getElementById("username").value.trim();
+function signIn() {
+    let username = document.getElementById("username").value.trim();
+
     if (username) {
         localStorage.setItem("user", username);
-        window.location.href = "form-selection.html";
+        window.location.href = "form-selection.html"; // Redirect after sign-in
     } else {
-        alert("Please use voice input to enter your username.");
+        alert("Please enter or speak your name.");
     }
-});
+}
