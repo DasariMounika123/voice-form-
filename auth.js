@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         recognition.onresult = function (event) {
             const spokenText = event.results[0][0].transcript.toLowerCase();
             
-            // Simple command-based autofill
+            // Autofill based on voice commands
             if (spokenText.includes("email")) {
                 emailInput.value = spokenText.replace("email", "").trim();
             } else if (spokenText.includes("password")) {
@@ -22,23 +22,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 form.submit();
             }
         };
+
+        recognition.onerror = function (event) {
+            console.error("Speech recognition error:", event.error);
+        };
     }
 
-    // Enable voice recognition when button is clicked
+    // Attach voice recognition to button
     voiceBtn.addEventListener("click", startVoiceRecognition);
 
     // Handle form submission
     form.addEventListener("submit", function (event) {
         event.preventDefault();
+        
+        // Simulate authentication (Replace with real authentication logic)
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
-
         if (email && password) {
-            // Simulate authentication (replace with actual validation)
-            localStorage.setItem("authenticated", "true");
-            window.location.href = "form-selection.html";
+            // Store mic enabled status before redirect
+            localStorage.setItem("micEnabled", "true");
+            window.location.href = "form-selection.html"; // Redirect after login
         } else {
-            alert("Please enter valid credentials.");
+            alert("Please enter email and password.");
         }
     });
 });
