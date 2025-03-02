@@ -1,52 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("signin-form");
-    const voiceBtn = document.getElementById("voice-btn");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = "en-US";
 
-    // Function to start voice recognition
-    function startVoiceRecognition() {
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = "en-US";
-        recognition.start();
+    const signInField = document.getElementById("signin-input");
+    const signInButton = document.getElementById("signin-button");
 
-        recognition.onresult = function (event) {
-            const spokenText = event.results[0][0].transcript.toLowerCase();
-            console.log("Recognized:", spokenText);
-
-            // Autofill based on voice commands
-            if (spokenText.includes("email")) {
-                emailInput.value = spokenText.replace("email", "").trim();
-            } else if (spokenText.includes("password")) {
-                passwordInput.value = spokenText.replace("password", "").trim();
-            } else if (spokenText.includes("sign in")) {
-                form.submit(); // Submit form when "sign in" is spoken
-            }
-        };
-
-        recognition.onerror = function (event) {
-            console.error("Speech recognition error:", event.error);
-        };
+    if (!signInField || !signInButton) {
+        console.error("Sign-in input or button not found.");
+        return;
     }
 
-    // Start mic on page load
-    startVoiceRecognition();
+    recognition.onresult = function (event) {
+        const transcript = event.results[0][0].transcript.trim();
+        signInField.value = transcript;
+    };
 
-    // Attach voice recognition to button
-    voiceBtn.addEventListener("click", startVoiceRecognition);
+    recognition.onerror = function (event) {
+        console.error("Speech recognition error:", event.error);
+    };
 
-    // Handle form submission
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
+    document.getElementById("mic-button").addEventListener("click", function () {
+        recognition.start();
+    });
 
-        // Simulate authentication (Replace with actual authentication logic)
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
-        if (email && password) {
-            localStorage.setItem("micEnabled", "true"); // Keep mic enabled after sign-in
-            window.location.href = "form-selection.html"; // Redirect after login
+    signInButton.addEventListener("click", function () {
+        if (signInField.value.trim() !== "") {
+            localStorage.setItem("user_signed_in", "true"); // Store sign-in state
+            window.location.href = "form-selection.html"; // Redirect to form selection
         } else {
-            alert("Please enter email and password.");
+            alert("Please enter your name using voice input.");
         }
     });
 });
