@@ -1,29 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = "en-US";
-
-    const signInField = document.getElementById("signin-input");
     const signInButton = document.getElementById("signin-button");
+    const signInField = document.getElementById("signin-input");
 
-    if (!signInField || !signInButton) {
-        console.error("Sign-in input or button not found.");
+    if (!signInButton || !signInField) {
+        console.error("Sign-in elements not found!");
         return;
     }
-
-    recognition.onresult = function (event) {
-        const transcript = event.results[0][0].transcript.trim();
-        signInField.value = transcript;
-    };
-
-    recognition.onerror = function (event) {
-        console.error("Speech recognition error:", event.error);
-    };
-
-    document.getElementById("mic-button").addEventListener("click", function () {
-        recognition.start();
-    });
 
     signInButton.addEventListener("click", function () {
         if (signInField.value.trim() !== "") {
