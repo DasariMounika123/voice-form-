@@ -1,5 +1,4 @@
-// Initialize SpeechRecognition API
-// Check if browser supports SpeechRecognition
+// Ensure SpeechRecognition is supported
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 if (SpeechRecognition) {
@@ -10,9 +9,11 @@ if (SpeechRecognition) {
         recognition.lang = 'en-US';
 
         function startRecognition(event) {
-            const inputField = event.target.closest('.field-container').querySelector('.input-field');
+            const button = event.target.closest('.icon-button'); // Get the clicked button
+            if (!button) return;
 
-            if (!inputField) {
+            const inputField = button.previousElementSibling; // Find the input field next to the button
+            if (!inputField || inputField.tagName !== 'INPUT') {
                 console.error("No input field found for this mic button.");
                 return;
             }
