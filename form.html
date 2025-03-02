@@ -1,0 +1,40 @@
+<html>
+    <!DOCTYPE html>
+    <html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="title">Contact Form</h2>
+        <p class="subtitle">Fill in your contact information</p>
+        <form>
+            <div id="fields">
+                <div class="field-container">
+                    <input type="text" placeholder="Enter your name" class="input-field">
+                    <button type="button" class="icon-button" onclick="alert('Voice input functionality not implemented')">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button type="button" class="delete-button" onclick="this.parentElement.remove()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <select class="select-field" onchange="this.previousElementSibling.previousElementSibling.type = this.value">
+                        <option value="text">Text</option>
+                        <option value="email">Email</option>
+                        <option value="password">Password</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="add-button" onclick="addField()">Add Field</button>
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
+    <script src="form.js"></script>
+    <script src="voi-to-spe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    
+</body>
+    </html>
