@@ -4,17 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Selection</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h2>Select a Form</h2>
-    <button onclick="selectForm('college')">College Form</button>
-    <button onclick="selectForm('internship')">Internship Form</button>
+    <button onclick="openForm('college')">College Form</button>
+    <button onclick="openForm('internship')">Internship Form</button>
 
     <script>
-        function selectForm(formType) {
-            localStorage.setItem("selectedForm", formType);
-            window.location.href = "voice-form.html";
+        function openForm(formType) {
+            window.location.href = formType + '-form.html';
         }
     </script>
 </body>
