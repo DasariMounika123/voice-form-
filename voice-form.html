@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Form</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (localStorage.getItem("micEnabled") === "true") {
+                startVoiceRecognition();
+            }
+        });
+
+        function startVoiceRecognition() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = "en-US";
+            recognition.start();
+
+            recognition.onresult = function (event) {
+                const spokenText = event.results[0][0].transcript.toLowerCase();
+                console.log("Heard:", spokenText);
+
+                if (document.getElementById("name") && spokenText.includes("name")) {
+                    document.getElementById("name").value = spokenText.replace("name", "").trim();
+                } else if (document.getElementById("place") && spokenText.includes("place")) {
+                    document.getElementById("place").value = spokenText.replace("place", "").trim();
+                }
+            };
+
+            recognition.onerror = function (event) {
+                console.error("Speech recognition error:", event.error);
+            };
+        }
+    </script>
+</head>
+<body>
+    <h1>Fill the Form with Your Voice</h1>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name"><br><br>
+
+        <label for="place">Place:</label>
+        <input type="text" id="place"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
