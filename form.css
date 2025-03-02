@@ -1,0 +1,87 @@
+body {
+    background-color: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+.container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 28rem;
+}
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+.subtitle {
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+}
+.field-container {
+    margin-bottom: 1rem;
+    position: relative;
+}
+.input-field {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.input-field:focus {
+    border-color: #3b82f6;
+}
+.icon-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 2.5rem;
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+}
+.delete-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+}
+.select-field {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    color: #6b7280;
+}
+.add-button, .submit-button {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.add-button {
+    background-color: #3b82f6;
+    color: white;
+    margin-bottom: 1rem;
+}
+.add-button:hover {
+    background-color: #2563eb;
+}
+.submit-button {
+    background-color: #3b82f6;
+    color: white;
+}
+.submit-button:hover {
+    background-color: #2563eb;
+}
