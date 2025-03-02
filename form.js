@@ -1,54 +1,31 @@
-function addField() {
-    const fieldContainer = document.createElement('div');
-    fieldContainer.className = 'field-container';
+// Initialize SpeechRecognition API
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (SpeechRecognition) {
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
 
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.placeholder = 'Enter field value';
-    input.className = 'input-field';
+    function startRecognition(event) {
+        const inputField = event.target.previousElementSibling; // Get the corresponding input field
 
-    const micButton = document.createElement('button');
-    micButton.type = 'button';
-    micButton.className = 'icon-button';
-    micButton.innerHTML = '<i class="fas fa-microphone"></i>';
-    micButton.onclick = function() {
-        // Add voice input functionality here
-        alert('Voice input functionality not implemented');
-    };
+        recognition.start();
 
-    const deleteButton = document.createElement('button');
-    deleteButton.type = 'button';
-    deleteButton.className = 'delete-button';
-    deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
-    deleteButton.onclick = function() {
-        fieldContainer.remove();
-    };
+        recognition.onresult = (event) => {
+            inputField.value = event.results[0][0].transcript; // Set recognized speech as input value
+        };
 
-    const fieldTypeSelect = document.createElement('select');
-    fieldTypeSelect.className = 'select-field';
-    fieldTypeSelect.onchange = function() {
-        input.type = fieldTypeSelect.value;
-    };
+        recognition.onerror = (event) => {
+            console.error('Speech recognition error:', event.error);
+        };
+    }
 
-    const optionText = document.createElement('option');
-    optionText.value = 'text';
-    optionText.text = 'Text';
-    fieldTypeSelect.appendChild(optionText);
-
-    const optionEmail = document.createElement('option');
-    optionEmail.value = 'email';
-    optionEmail.text = 'Email';
-    fieldTypeSelect.appendChild(optionEmail);
-
-    const optionPassword = document.createElement('option');
-    optionPassword.value = 'password';
-    optionPassword.text = 'Password';
-    fieldTypeSelect.appendChild(optionPassword);
-
-    fieldContainer.appendChild(input);
-    fieldContainer.appendChild(micButton);
-    fieldContainer.appendChild(deleteButton);
-    fieldContainer.appendChild(fieldTypeSelect);
-
-    document.getElementById('fields').appendChild(fieldContainer);
+    // Attach event listener to microphone buttons dynamically
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.icon-button').forEach(button => {
+            button.addEventListener('click', startRecognition);
+        });
+    });
+} else {
+    console.warn('SpeechRecognition API is not supported in this browser.');
 }
